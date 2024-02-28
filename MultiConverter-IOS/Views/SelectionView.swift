@@ -8,9 +8,45 @@
 import SwiftUI
 
 struct SelectionView: View {
+    
+    var conversions: [Conversion] = ConversionList.theConversions
+    @Environment(\.colorScheme) var colorScheme
+    
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+            NavigationView {
+                List(conversions, id: \.id) { conversion in
+                    NavigationLink(destination: MainView(conversion: conversion), label: {
+                        HStack {
+                                Image(colorScheme == .dark ? conversion.darkImage : conversion.imageName)
+                                .frame(maxWidth: .pi)
+                                .padding()
+                                .padding(.trailing)
+                            
+                            
+                            VStack (alignment: .leading){
+                                Text(conversion.title)
+                                    .fontWeight(.bold)
+                                    .minimumScaleFactor(0.5)
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                                
+                                Text(conversion.types)
+                                    .font(.subheadline)
+                                    .foregroundColor(.secondary)
+                                
+                            }
+                            
+                        }
+                    })
+                    .padding()
+                    
+                }
+                .navigationTitle("Conversion Options")
+        }
+        
     }
+    
+
 }
 
 #Preview {
